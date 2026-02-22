@@ -14,8 +14,7 @@
   <title>INDEX BOOKS</title>
   <?php snippet('meta_information'); ?>
   <?php snippet('robots'); ?>
-  <?= css('assets/css/style.css?v=' . sha1_file('assets/css/style.css')) ?>
-  <?= css('assets/css/print.css?v=' . sha1_file('assets/css/print.css')) ?>
+  <?= css('assets/css/tailwind.css?v=' . sha1_file('assets/css/tailwind.css')) ?>
   <?= css('assets/css/lightbox.css?v=' . sha1_file('assets/css/lightbox.css')) ?>
   <?= js('assets/js/jquery.min.js') ?>
   <?= js('assets/js/images.js') ?>
@@ -55,7 +54,7 @@
   <!-- End Matomo Code -->
 </head>
 
-<body data-display="<?= $page->template() ?>">
+<body data-display="<?= $page->template() ?>" class="antialiased text-black">
   <script>
     window.SnipcartSettings = {
       publicApiKey: 'M2E1NDU1M2EtMGU4OS00ZTVkLWFlOWMtNWY2NDZjNGVjNTdlNjM3NTA4NDM4NzI0Mjg5NTA4',
@@ -102,16 +101,16 @@
     })();
   </script>
 
-  <header class="index-header" style="background-color: <?= $color ?>; box-shadow: 0px 15px 16px 0px <?= $color ?>">
-    <h1><a href="<?= $site->url() ?>/books">INDEX<span> BOOKS</span> </a>,&nbsp; </nav>
-      <nav>
+  <header class="index-header fixed left-0 top-[var(--admin-bar--height,0)] z-10 flex w-screen justify-between bg-white p-4 shadow-header transition-all duration-300" style="background-color: <?= $color ?>; box-shadow: 0px 15px 16px 0px <?= $color ?>">
+    <h1 class="flex items-start font-synt text-body"><a href="<?= $site->url() ?>/books">INDEX<span> BOOKS</span> </a>,&nbsp;
+      <nav class="uppercase">
 
         <!-- <a href="/books/about" class="no-mobile">ABOUT, </a> -->
         <a class="snipcart-checkout">CART</a> (<span class="snipcart-items-count "></span>, <span class="snipcart-total-price"></span>)
       </nav>
     </h1>
 
-    <nav class="menu" style="cursor:pointer">
+    <nav class="menu cursor-pointer uppercase text-right">
       <span>Menu</span>
     </nav>
   </header>

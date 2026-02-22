@@ -1,10 +1,6 @@
 <?php snippet('books/header', ['color' => 'white']) ?>
-
-<head>
-    <?= css('assets/css/books.css?v=' . sha1_file('assets/css/books.css')) ?>
-</head>
-<main class="shop">
-    <div class="">
+<main class="shop px-0 pb-[5.6em] pr-16 pt-[5.6em] menu:pr-4">
+    <div>
         <ul class="shop-about">
             <?= $site->about()->kt() ?>
         </ul>
@@ -14,20 +10,20 @@
                 <li>
                     <a href="<?= $product->url() ?>" class="link-container">
                         <?php if ($image = $product->cover()->tofile()) : ?>
-                            <figure class="figuregrid product ">
-                                <span class="img " style="--w:4;--h:3;--background:black;background:black" data-contain="false">
+                            <figure class="figuregrid product">
+                                <span class="img" style="--w:4;--h:3;--background:black;background:black" data-contain="false">
                                     <picture>
                                         <source srcset="<?= $image->srcset('webp') ?>" type="image/webp">
-                                        <img alt="<?= $image->alt() ?>" src="<?= $image->url() ?>" srcset="<?= $image->srcset('default') ?>" style="  height: 80%; margin: auto;">
+                                        <img alt="<?= $image->alt() ?>" src="<?= $image->url() ?>" srcset="<?= $image->srcset('default') ?>" class="m-auto h-[80%]">
                                     </picture>
                                 </span>
                             </figure>
                             <div class="info">
-                                <figcaption class="text ">
+                                <figcaption class="text">
                                     <p><?= $product->title() ?></p>
                                     <?php if ($product->editors()) : ?>
 
-                                        <ul class="editors" style="margin-top:0.6rem">
+                                        <ul class="editors mt-[0.6rem]">
                                             <?php if ($product->editors()->isNotEmpty()) : ?>
                                                 <?php foreach ($product->editors()->split() as $editor) : ?>
                                                     <li class="editor sub-title-books"><span> <?= $editor ?></span></li>
@@ -45,7 +41,6 @@
                         <?php endif ?>
 
                     </a>
-                    </figure>
                 </li>
             <?php endforeach ?>
         </ul>

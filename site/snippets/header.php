@@ -51,8 +51,6 @@
   <link rel="manifest" href="/site.webmanifest">
 
   <!-- css -->
-  <?= css('assets/css/style.css?v=' . sha1_file('assets/css/style.css')) ?>
-  <?= css('assets/css/print.css?v=' . sha1_file('assets/css/print.css')) ?>
   <?= css('assets/css/tailwind.css?v=' . sha1_file('assets/css/tailwind.css')) ?>
 
   <!-- js -->
@@ -94,20 +92,20 @@
   <!-- End Matomo Code -->
 </head>
 
-<body data-display="<?= $page->template() ?>">
-  <header class="index-header" <?php if ($page->template() == 'essay') : ?>style="background-color: rgb(<?= $page->parent()->issue_color() ?>); box-shadow: 0px 11px 16px 0px rgba(<?= $page->parent()->issue_color() ?>);" <?php endif ?>>
-    <h1>
+<body data-display="<?= $page->template() ?>" class="antialiased text-black">
+  <header class="index-header fixed left-0 top-[var(--admin-bar--height,0)] z-10 flex w-screen justify-between bg-white p-4 shadow-header transition-all duration-300" <?php if ($page->template() == 'essay') : ?>style="background-color: rgb(<?= $page->parent()->issue_color() ?>); box-shadow: 0px 11px 16px 0px rgba(<?= $page->parent()->issue_color() ?>);" <?php endif ?>>
+    <h1 class="flex items-start font-synt text-body">
       <a href="<?= $site->url() ?>">INDEX JOURNAL</a>
 
 
       <?php foreach (page('issues')->children()->listed()->flip()->slice(0, 1) as $issue) : ?>
-        <a href="<?= $issue->url() ?>" class="current-issue"><span>, Issue </span><span>No. </span><?= $issue->num() ?><span style="text-transform: uppercase;"> <?= $issue->title() ?></span></a>
+        <a href="<?= $issue->url() ?>" class="current-issue"><span>, Issue </span><span>No. </span><?= $issue->num() ?><span class="uppercase"> <?= $issue->title() ?></span></a>
       <?php endforeach ?>
 
 
     </h1>
 
-    <nav class="menu" style="cursor:pointer">
+    <nav class="menu cursor-pointer uppercase text-right">
       <span>Menu</span>
     </nav>
   </header>
