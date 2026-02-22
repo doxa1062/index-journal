@@ -52,7 +52,7 @@ tabs:
             width: 1/2
           issue_color:
             label: Issue color
-            type: text
+            type: color
             width: 1/2
           issue_doi:
             label: Issue DOI

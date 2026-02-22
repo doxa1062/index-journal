@@ -1,4 +1,4 @@
-<section class="menu-pane fixed top-0 z-1000 hidden w-screen overflow-scroll bg-white p-4 shadow-header" <?php if ($page->template() == 'essay') : ?> style="background-color: rgb(<?= $page->parent()->issue_color() ?>); box-shadow: 0px 15px 16px 0px rgba(<?= $page->parent()->issue_color() ?>);" <?php endif ?><?php if ($page->template() == 'product') : ?> style="background-color: <?= $page->color() ?>; box-shadow: 0px 15px 16px 0px <?= $page->color() ?>;" <?php endif ?>>
+<section class="menu-pane fixed top-0 z-1000 hidden w-screen overflow-scroll bg-white p-4 shadow-header" <?php if ($page->template() == 'essay') : ?> style="background-color: <?= issueColorCss($page->parent()->issue_color()) ?>; box-shadow: 0px 15px 16px 0px <?= issueColorCss($page->parent()->issue_color(), 0.55) ?>;" <?php endif ?><?php if ($page->template() == 'product') : ?> style="background-color: <?= $page->color() ?>; box-shadow: 0px 15px 16px 0px <?= $page->color() ?>;" <?php endif ?>>
     <h1 class="close absolute right-4 top-4 cursor-pointer">(close)</h1>
 
     <h1 class="flex flex-row">

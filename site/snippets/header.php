@@ -93,21 +93,44 @@
 </head>
 
 <body data-display="<?= $page->template() ?>" class="antialiased text-black">
-  <header class="index-header fixed left-0 top-[var(--admin-bar--height,0)] z-10 flex w-screen justify-between bg-white p-4 shadow-header transition-all duration-300" <?php if ($page->template() == 'essay') : ?>style="background-color: rgb(<?= $page->parent()->issue_color() ?>); box-shadow: 0px 11px 16px 0px rgba(<?= $page->parent()->issue_color() ?>);" <?php endif ?>>
-    <h1 class="flex items-start font-synt text-body">
-      <a href="<?= $site->url() ?>">INDEX JOURNAL</a>
+  <?php if ($page->template()->name() === 'home') : ?>
+    <?php
+    $about = $site->find('about');
+    $issues = $site->find('issues');
+    $emaj = $site->find('emaj');
+    ?>
+    <header class="index-header equator-home-header fixed left-0 top-[var(--admin-bar--height,0)] z-10 flex w-screen items-center justify-between bg-white p-4 shadow-header transition-all duration-300">
+      <h1 class="equator-home-logo">
+        <a href="<?= $site->url() ?>">index journal</a>
+      </h1>
+
+      <nav class="equator-home-nav">
+        <a href="<?= $about ? $about->url() : url('about') ?>">about</a>
+        <a href="<?= $site->url() ?>">articles</a>
+        <a href="<?= $issues ? $issues->url() : url('issues') ?>">issues</a>
+        <a href="<?= $emaj ? $emaj->url() : url('emaj') ?>">emaj</a>
+        <a href="https://newsletter.index-press.com/subscription/form">join</a>
+        <a href="https://index-press.com/" target="_blank" rel="noopener noreferrer">shop</a>
+        <span class="menu equator-home-menu">menu</span>
+      </nav>
+    </header>
+  <?php else : ?>
+    <header class="index-header fixed left-0 top-[var(--admin-bar--height,0)] z-10 flex w-screen justify-between bg-white p-4 shadow-header transition-all duration-300" <?php if ($page->template() == 'essay') : ?>style="background-color: <?= issueColorCss($page->parent()->issue_color()) ?>; box-shadow: 0px 11px 16px 0px <?= issueColorCss($page->parent()->issue_color(), 0.55) ?>;" <?php endif ?>>
+      <h1 class="flex items-start font-synt text-body">
+        <a href="<?= $site->url() ?>">INDEX JOURNAL</a>
 
 
-      <?php foreach (page('issues')->children()->listed()->flip()->slice(0, 1) as $issue) : ?>
-        <a href="<?= $issue->url() ?>" class="current-issue"><span>, Issue </span><span>No. </span><?= $issue->num() ?><span class="uppercase"> <?= $issue->title() ?></span></a>
-      <?php endforeach ?>
+        <?php foreach (page('issues')->children()->listed()->flip()->slice(0, 1) as $issue) : ?>
+          <a href="<?= $issue->url() ?>" class="current-issue"><span>, Issue </span><span>No. </span><?= $issue->num() ?><span class="uppercase"> <?= $issue->title() ?></span></a>
+        <?php endforeach ?>
 
 
-    </h1>
+      </h1>
 
-    <nav class="menu cursor-pointer uppercase text-right">
-      <span>Menu</span>
-    </nav>
-  </header>
+      <nav class="menu cursor-pointer uppercase text-right">
+        <span>Menu</span>
+      </nav>
+    </header>
+  <?php endif ?>
 
   <?php snippet('menu-pane'); ?>

@@ -7,7 +7,7 @@ sections:
     fields:
       issue_color:
         label: Issue color
-        type: text
+        type: color
         width: 1/2
         
   published:

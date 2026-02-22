@@ -2,7 +2,7 @@
 <?php echo $page->counterCss(); ?>
 <main data-template="<?= $page->template() ?>" class="snap-y snap-mandatory overflow-y-scroll h-screen">
   <!-- Title -->
-  <section class="title-block snap-start" style="background-color: rgb(<?= $page->parent()->issue_color() ?>)">
+  <section class="title-block snap-start" style="background-color: <?= issueColorCss($page->parent()->issue_color()) ?>">
     <h1 style="font-size:6vw">
       <span class="title"><?= $page->title() ?></span>
       <?php if ($page->subtitle()->isNotEmpty()) : ?>
