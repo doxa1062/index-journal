@@ -61,11 +61,11 @@ $buildSummary = function ($issue) use ($formatEditors) {
 
 ?>
 
-<main class="eq-home" aria-label="All issues">
-  <section class="eq-grid" aria-label="Issue cards">
-    <h2 class="eq-grid-issue">
+<main class="ij-home" aria-label="All issues">
+  <section class="ij-grid" aria-label="Issue cards">
+    <h2 class="ij-grid-issue">
       <span>All issues</span>
-      <span class="eq-grid-date"><?= $issues->count() ?> total</span>
+      <span class="ij-grid-date"><?= $issues->count() ?> total</span>
     </h2>
 
     <?php foreach ($issues as $issue) : ?>
@@ -77,40 +77,22 @@ $buildSummary = function ($issue) use ($formatEditors) {
       $highlightColor = issueColorCss($issue->issue_color());
       ?>
 
-      <article class="eq-card" style="--eq-issue-highlight: <?= esc($highlightColor) ?>;">
-        <a href="<?= $issue->url() ?>" class="eq-card-link">
-          <?php if ($image) : ?>
-            <figure class="eq-card-image">
-              <img
-                src="<?= $image->url() ?>"
-                alt="<?= $image->alt()->or('Issue ' . $number . ': ' . $issue->title())->esc() ?>">
-            </figure>
-          <?php else : ?>
-            <div class="eq-card-image eq-card-image--placeholder">
-              <span>Issue <?= esc($number) ?></span>
-            </div>
-          <?php endif ?>
-
-          <h3 class="eq-card-title">
-            Issue <?= esc($number) ?>: <?= $issue->title()->html() ?>
-            <?php if ($issueType !== '') : ?>
-              <span class="eq-inline-type"><?= esc($issueType) ?></span>
-            <?php endif ?>
-          </h3>
-
-          <?php if ($issue->issue_date()->isNotEmpty()) : ?>
-            <p class="eq-card-author"><?= $issue->issue_date()->toDate('d.m.Y') ?></p>
-          <?php endif ?>
-
-          <?php if ($summary !== '') : ?>
-            <p class="eq-card-summary"><?= esc($summary) ?></p>
-          <?php endif ?>
-        </a>
-      </article>
+      <?php snippet('ij-card', [
+        'url' => $issue->url(),
+        'image' => $image,
+        'imageAlt' => $image ? $image->alt()->or('Issue ' . $number . ': ' . $issue->title())->value() : '',
+        'placeholder' => 'Issue ' . $number,
+        'titlePrefix' => 'Issue ' . $number . ': ',
+        'title' => $issue->title()->value(),
+        'type' => $issueType,
+        'meta' => $issue->issue_date()->isNotEmpty() ? $issue->issue_date()->toDate('d.m.Y') : '',
+        'summary' => $summary,
+        'highlightColor' => $highlightColor
+      ]) ?>
     <?php endforeach ?>
 
     <?php if ($issues->isEmpty()) : ?>
-      <p class="eq-card-summary">No published issues yet.</p>
+      <p class="m-0 max-w-[95%] font-['Helvetica_Neue',Helvetica,Arial,sans-serif] text-[0.99rem] leading-[1.26] normal-case max-[760px]:text-[0.9rem]">No published issues yet.</p>
     <?php endif ?>
   </section>
 </main>

@@ -63,7 +63,7 @@ class SiteMeta
                     $sitemap[] = '  <priority>' . number_format($meta->priority(), 1, '.', '') . '</priority>';
 
                     $changefreq = $meta->changefreq();
-                    if ($changefreq->isNotEmpty()) {
+                    if ($changefrij->isNotEmpty()) {
                         $sitemap[] = '  <changefreq>' . $changefreq . '</changefreq>';
                     }
 

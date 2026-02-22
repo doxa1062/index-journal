@@ -23,7 +23,10 @@ foreach ($issues as $issue) {
     $type = trim(str_replace('-', ' ', $type));
     $type = $type ?: 'essay';
 
-    $image = $article->images()->sortBy('sort', 'asc')->first();
+    $image = $article->cover()->toFile();
+    if (!$image) {
+      $image = $article->images()->sortBy('sort', 'asc')->first();
+    }
     if (!$image && $issue->issue_image()->isNotEmpty()) {
       $image = $issue->issue_image()->toFile();
     }
@@ -49,8 +52,8 @@ foreach ($issues as $issue) {
 
 ?>
 
-<main class="eq-home" aria-label="All articles feed">
-  <section class="eq-grid" aria-label="Article cards">
+<main class="ij-home" aria-label="All articles feed">
+  <section class="ij-grid" aria-label="Article cards">
     <?php $currentIssueId = null; ?>
     <?php foreach ($feedItems as $item) : ?>
       <?php
@@ -62,41 +65,24 @@ foreach ($issues as $issue) {
       ?>
 
       <?php if ($currentIssueId !== $issue->id()) : ?>
-        <h2 class="eq-grid-issue">
+        <h2 class="ij-grid-issue">
           <span>Issue <?= $issue->num() ?>: <?= $issue->title()->html() ?></span>
-          <span class="eq-grid-date"><?= $issue->issue_date()->toDate('d.m.Y') ?></span>
+          <span class="ij-grid-date"><?= $issue->issue_date()->toDate('d.m.Y') ?></span>
         </h2>
         <?php $currentIssueId = $issue->id(); ?>
       <?php endif ?>
 
-      <article class="eq-card" style="--eq-issue-highlight: <?= esc($highlightColor) ?>;">
-        <a href="<?= $article->url() ?>" class="eq-card-link">
-          <?php if ($image) : ?>
-            <figure class="eq-card-image">
-              <img
-                src="<?= $image->url() ?>"
-                alt="<?= $image->alt()->or($article->title())->esc() ?>">
-            </figure>
-          <?php else : ?>
-            <div class="eq-card-image eq-card-image--placeholder">
-              <span>Issue <?= $issue->num() ?></span>
-            </div>
-          <?php endif ?>
-
-          <h3 class="eq-card-title">
-            <?= $article->title()->html() ?>
-            <span class="eq-inline-type"><?= esc($item['type']) ?></span>
-          </h3>
-
-          <?php if ($article->author()->isNotEmpty()) : ?>
-            <p class="eq-card-author"><?= $article->author()->html() ?></p>
-          <?php endif ?>
-
-          <?php if (!empty($summary)) : ?>
-            <p class="eq-card-summary"><?= esc($summary) ?></p>
-          <?php endif ?>
-        </a>
-      </article>
+      <?php snippet('ij-card', [
+        'url' => $article->url(),
+        'image' => $image,
+        'imageAlt' => $image ? $image->alt()->or($article->title())->value() : '',
+        'placeholder' => 'Issue ' . $issue->num(),
+        'title' => $article->title()->value(),
+        'type' => $item['type'],
+        'meta' => $article->author()->value(),
+        'summary' => $summary,
+        'highlightColor' => $highlightColor
+      ]) ?>
     <?php endforeach ?>
   </section>
 </main>
